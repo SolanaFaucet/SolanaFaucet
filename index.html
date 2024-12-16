@@ -58,42 +58,20 @@
 				font-family: 'Orbitron';
 			}
 
-			/* New Styles for About Link and Section */
-			.explanation-link {
-				position: absolute;
-				top: 10px;
-				left: 10px;
-				font-family: 'Orbitron', sans-serif;
+			.og-link {
+				margin-top: 10px;
 				font-size: 1.2rem;
-				z-index: 10;
 			}
 
-			.explanation-link a {
-				color: red; /* Set the font color to red */
+			.og-link a {
+				color: cyan;
 				text-decoration: none;
-				background: rgba(0, 0, 0, 0.6);
-				padding: 8px 12px;
-				border-radius: 5px;
-				transition: background 0.3s ease, color 0.3s ease;
-			}
-
-			.explanation-link a:hover {
-				background: rgba(255, 0, 0, 0.7);
-				color: white; /* Make the text white on hover */
-			}
-
-			.about-section {
-				position: absolute;
-				top: 60px;
-				left: 10px;
-				max-width: 400px;
-				background: rgba(0, 0, 0, 0.8);
-				color: white;
-				padding: 15px;
-				border-radius: 10px;
-				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 				font-family: 'Orbitron', sans-serif;
-				display: none; /* Hidden by default */
+				transition: color 0.3s ease;
+			}
+
+			.og-link a:hover {
+				color: lightgreen;
 			}
 
 			/* Style for the X Link */
@@ -116,7 +94,7 @@
 			}
 
 			.x-link a:hover {
-				background: rgba(0, 0, 255, 0.7); /* Blue background on hover */
+				background: rgba(0, 0, 255, 0.7);
 				color: white;
 			}
 		</style>
@@ -151,6 +129,12 @@
 			<div class="time" id="timer">00:00:00</div>
 			<div class="ca-container">
 				CA: <span class="copyable-text" id="copyText">5GW9LJJ49abpmogB6h4oVNbr93isPWfcgAjD8smWpump</span>
+			</div>
+			<!-- OG Bitcoin Faucet Link -->
+			<div class="og-link">
+				<a href="https://web.archive.org/web/20100703032414/http://freebitcoins.appspot.com/" target="_blank" rel="noopener">
+					OG Bitcoin Faucet
+				</a>
 			</div>
 		</div>
 
