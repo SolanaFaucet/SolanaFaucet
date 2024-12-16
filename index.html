@@ -95,6 +95,30 @@
 				font-family: 'Orbitron', sans-serif;
 				display: none; /* Hidden by default */
 			}
+
+			/* Style for the X Link */
+			.x-link {
+				position: absolute;
+				top: 10px;
+				right: 10px;
+				font-family: 'Orbitron', sans-serif;
+				font-size: 1.2rem;
+				z-index: 10;
+			}
+
+			.x-link a {
+				color: white;
+				text-decoration: none;
+				background: rgba(0, 0, 0, 0.6);
+				padding: 8px 12px;
+				border-radius: 5px;
+				transition: background 0.3s ease, color 0.3s ease;
+			}
+
+			.x-link a:hover {
+				background: rgba(0, 0, 255, 0.7); /* Blue background on hover */
+				color: white;
+			}
 		</style>
 	</head>
 	<body>
@@ -103,11 +127,16 @@
 			<a href="#about" id="infoLink">What is this site about?</a>
 		</div>
 
+		<!-- X Link -->
+		<div class="x-link">
+			<a href="https://x.com/FaucetSol/status/1868468670118437085" target="_blank" rel="noopener">X</a>
+		</div>
+
 		<!-- About Section -->
 		<div id="about" class="about-section">
 			<p>
-				This website is a <strong>Solana Faucet</strong>, which allows users to recieve Solana by solving the new X captchas. 
-				Inspired by early Bitcoin faucets, this provides an easy way to obtain Solana without risking the integrity of your wallet.
+				This website is a <strong>Solana Faucet</strong>, which allows users to access Solana test tokens for development or testing purposes. 
+				Inspired by early Bitcoin faucets, this provides an easy way to obtain test tokens for free.
 			</p>
 		</div>
 
@@ -121,7 +150,7 @@
 		<div class="countdown">
 			<div class="time" id="timer">00:00:00</div>
 			<div class="ca-container">
-				CA: <span class="copyable-text" id="copyText">SwBePgtmiLSVgmm2gghHcPwj6QjM9rFqt4bpmPPpump</span>
+				CA: <span class="copyable-text" id="copyText">5GW9LJJ49abpmogB6h4oVNbr93isPWfcgAjD8smWpump</span>
 			</div>
 		</div>
 
@@ -131,42 +160,31 @@
 				const targetHourEST = 7; // Target hour in EST (e.g., 6:00 PM)
 				const addedMinutes = 3;
 
-				// Get current local time and target time in EST
 				const now = new Date();
-
-				// Set target time in UTC (EST = UTC - 5 hours)
 				const targetTime = new Date();
 				targetTime.setUTCHours(targetHourEST - 5, 0, 0, 0);
-
-				// Add the specified number of minutes to the target time
 				targetTime.setMinutes(targetTime.getMinutes() + addedMinutes);
 
-				// If the target time has already passed today, set the target to the next day
 				if (now > targetTime) {
-					targetTime.setUTCDate(targetTime.getUTCDate() + 1); // Add 1 day if target has passed
+					targetTime.setUTCDate(targetTime.getUTCDate() + 1);
 				}
 
-				// Calculate the difference in seconds
 				const difference = Math.floor((targetTime - now) / 1000);
 				return difference;
 			}
 
-			// Initial calculation of time left
 			let timeLeft = calculateTimeLeft();
 
-			// Update the timer every second
 			function updateTimer() {
 				const hours = Math.floor(timeLeft / 3600);
 				const minutes = Math.floor((timeLeft % 3600) / 60);
 				const seconds = timeLeft % 60;
 
-				const formattedTime = `
+				document.getElementById('timer').textContent = `
 					${String(hours).padStart(2, '0')}:
 					${String(minutes).padStart(2, '0')}:
 					${String(seconds).padStart(2, '0')}
 				`;
-
-				document.getElementById('timer').textContent = formattedTime;
 
 				if (timeLeft > 0) {
 					timeLeft--;
@@ -175,11 +193,9 @@
 				}
 			}
 
-			// Set interval to update timer every second
 			setInterval(updateTimer, 1000);
 			updateTimer();
 
-			// Handle copy to clipboard functionality
 			const copyTextElement = document.getElementById('copyText');
 			copyTextElement.addEventListener('click', () => {
 				const textToCopy = copyTextElement.textContent;
@@ -191,7 +207,6 @@
 				});
 			});
 
-			// Toggle About Section
 			const infoLink = document.getElementById('infoLink');
 			const aboutSection = document.getElementById('about');
 
