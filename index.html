@@ -41,4 +41,183 @@
 			.time {
 				font-size: 9rem;
 				color: white;
-				text-shadow: 0 0 10px red, 0 0 20px red, 0 0 
+				text-shadow: 0 0 10px red, 0 0 20px red, 0 0 30px red;
+				font-family: 'Orbitron';
+			}
+
+			.ca-container {
+				margin-top: 14px;
+				font-size: 1.5em;
+				color: grey;
+				font-family: 'Orbitron';
+			}
+
+			.copyable-text {
+				cursor: pointer;
+				color: grey;
+				font-family: 'Orbitron';
+			}
+
+			/* New Styles for About Link and Section */
+			.explanation-link {
+				position: absolute;
+				top: 10px;
+				left: 10px;
+				font-family: 'Orbitron', sans-serif;
+				font-size: 1.2rem;
+				z-index: 10;
+			}
+
+			.explanation-link a {
+				color: red; /* Set the font color to red */
+				text-decoration: none;
+				background: rgba(0, 0, 0, 0.6);
+				padding: 8px 12px;
+				border-radius: 5px;
+				transition: background 0.3s ease, color 0.3s ease;
+			}
+
+			.explanation-link a:hover {
+				background: rgba(255, 0, 0, 0.7);
+				color: white; /* Make the text white on hover */
+			}
+
+			.about-section {
+				position: absolute;
+				top: 60px;
+				left: 10px;
+				max-width: 400px;
+				background: rgba(0, 0, 0, 0.8);
+				color: white;
+				padding: 15px;
+				border-radius: 10px;
+				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+				font-family: 'Orbitron', sans-serif;
+				display: none; /* Hidden by default */
+			}
+
+			/* Style for the X Link */
+			.x-link {
+				position: absolute;
+				top: 10px;
+				right: 10px;
+				font-family: 'Orbitron', sans-serif;
+				font-size: 1.2rem;
+				z-index: 10;
+			}
+
+			.x-link a {
+				color: white;
+				text-decoration: none;
+				background: rgba(0, 0, 0, 0.6);
+				padding: 8px 12px;
+				border-radius: 5px;
+				transition: background 0.3s ease, color 0.3s ease;
+			}
+
+			.x-link a:hover {
+				background: rgba(0, 0, 255, 0.7); /* Blue background on hover */
+				color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- Explanation Link -->
+		<div class="explanation-link">
+			<a href="#about" id="infoLink">What is this site about?</a>
+		</div>
+
+		<!-- X Link -->
+		<div class="x-link">
+			<a href="https://x.com/FaucetSol/status/1868468670118437085" target="_blank" rel="noopener">X</a>
+		</div>
+
+		<!-- About Section -->
+		<div id="about" class="about-section">
+			<p>
+				This website is a <strong>Solana Faucet</strong>, which allows users to access Solana test tokens for development or testing purposes. 
+				Inspired by early Bitcoin faucets, this provides an easy way to obtain test tokens for free.
+			</p>
+		</div>
+
+		<div class="overlay"></div>
+
+		<video class="video-background" autoplay muted loop>
+			<source src="background-video.mp4" type="video/mp4">
+			Your browser does not support the video tag.
+		</video>
+
+		<div class="countdown">
+			<div class="time" id="timer">00:00:00</div>
+			<div class="ca-container">
+				CA: <span class="copyable-text" id="copyText">coming soon, pay attention to the X for the real address</span>
+			</div>
+		</div>
+
+		<script>
+			// Function to calculate time left until a target time in EST (UTC -5) + added minutes
+			function calculateTimeLeft() {
+				const targetHourMST = 3; // Target hour in MST (e.g., 6:00 PM)
+				const addedMinutes = 0;
+
+				const now = new Date();
+				const targetTime = new Date();
+				targetTime.setUTCHours(targetHourEST - 5, 0, 0, 0);
+				targetTime.setMinutes(targetTime.getMinutes() + addedMinutes);
+
+				if (now > targetTime) {
+					targetTime.setUTCDate(targetTime.getUTCDate() + 1);
+				}
+
+				const difference = Math.floor((targetTime - now) / 1000);
+				return difference;
+			}
+
+			let timeLeft = calculateTimeLeft();
+
+			function updateTimer() {
+				const hours = Math.floor(timeLeft / 3600);
+				const minutes = Math.floor((timeLeft % 3600) / 60);
+				const seconds = timeLeft % 60;
+
+				document.getElementById('timer').textContent = `
+					${String(hours).padStart(2, '0')}:
+					${String(minutes).padStart(2, '0')}:
+					${String(seconds).padStart(2, '0')}
+				`;
+
+				if (timeLeft > 0) {
+					timeLeft--;
+				} else {
+					timeLeft = calculateTimeLeft();
+				}
+			}
+
+			setInterval(updateTimer, 1000);
+			updateTimer();
+
+			const copyTextElement = document.getElementById('copyText');
+			copyTextElement.addEventListener('click', () => {
+				const textToCopy = copyTextElement.textContent;
+				navigator.clipboard.writeText(textToCopy).then(() => {
+					copyTextElement.textContent = 'Copied to clipboard';
+					setTimeout(() => {
+						copyTextElement.textContent = textToCopy;
+					}, 2000);
+				});
+			});
+
+			const infoLink = document.getElementById('infoLink');
+			const aboutSection = document.getElementById('about');
+
+			infoLink.addEventListener('click', (e) => {
+				e.preventDefault();
+				if (aboutSection.style.display === 'none' || aboutSection.style.display === '') {
+					aboutSection.style.display = 'block';
+				} else {
+					aboutSection.style.display = 'none';
+				}
+			});
+		</script>
+	</body>
+</html>
